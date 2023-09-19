@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "sx1280_tranceiver")(type "KiCad")(uri "${KIPRJMOD}/sx1280_tranceiver.kicad_sym")(options "")(descr ""))
+)

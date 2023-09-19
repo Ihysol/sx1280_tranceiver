@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "sx1280_tranceiver")(type "KiCad")(uri "${KIPRJMOD}/sx1280_tranceiver.pretty")(options "")(descr ""))
+)
