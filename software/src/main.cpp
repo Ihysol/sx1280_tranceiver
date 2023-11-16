@@ -73,15 +73,16 @@ void setup()
 
   // using already existing spi
   SPI.begin();
-  SX1280 test1(SPI, SS, NRESET, BUSY);
+  SX1280 sx1280_1(SPI, SS, NRESET, BUSY);
 
   // creating new spi
-  SX1280 test2(18, 19, 23, 5, NRESET, BUSY);
 
   uint8_t buf[3] = {0xff, 0xf0, 0x0f};
   // WriteCommand(0xF0, buf, sizeof(buf));
-  test1.WriteCommand(0xF0, buf, sizeof(buf));
-  test2.WriteCommand(0xF0, buf, sizeof(buf));
+  sx1280_1.WriteCommand(0xF0, buf, sizeof(buf));
+
+  Serial.begin(115200);
+  Serial.println("test");
 
   /*
   thoughts on usability
