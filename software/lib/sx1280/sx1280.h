@@ -3,6 +3,7 @@
 
 #include <SPI.h>
 #include <Arduino.h>
+#include <sx1280_utils.h>
 
 class SX1280
 {

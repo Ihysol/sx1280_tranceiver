@@ -1,5 +1,6 @@
 #include <sx1280.h>
 
+char err_buf[50];
 
 SX1280::SX1280(uint8_t sck, uint8_t miso, uint8_t mosi, uint8_t ss, uint8_t nrst, uint8_t busy) : m_spi(SPI), m_ss(ss), m_nrst(nrst), m_busy(busy)
 {
@@ -48,24 +49,33 @@ void SX1280::WakeUp(void)
 
 void SX1280::WriteCommand(uint8_t command, uint8_t * buf, uint16_t size)
 {
+    uint8_t err = 0;
     WaitOnBusy();
 
     digitalWrite(m_ss, LOW);
-    m_spi.transfer((uint8_t)command);
+    err = m_spi.transfer((uint8_t)command);
+    Serial.println(decodeStatusCode(err, err_buf, sizeof(err_buf)));
+
     for(uint16_t i = 0; i < size; i++)
     {
-        m_spi.transfer(buf[i]);
+        err = m_spi.transfer(buf[i]);
+        Serial.println(decodeStatusCode(err, err_buf, sizeof(err_buf)));
     }
     digitalWrite(m_ss, HIGH);
 }
 
 void SX1280::ReadCommand(uint8_t command, uint8_t * buf, uint16_t size)
 {
+    uint8_t err = 0;
     WaitOnBusy();
 
     digitalWrite(m_ss, LOW);
-    m_spi.transfer((uint8_t) command);
-    m_spi.transfer(0x00);
+    err = m_spi.transfer((uint8_t) command);
+    Serial.println(decodeStatusCode(err, err_buf, sizeof(err_buf)));
+
+    err = m_spi.transfer(0x00);
+    Serial.println(decodeStatusCode(err, err_buf, sizeof(err_buf)));
+
     for(uint16_t i=  0; i < size; i++)
     {
         buf[i] = m_spi.transfer(0x00);
